@@ -2,90 +2,210 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>2026 ACLS Slides</title>
+<title>2026 ACLS Slides Pro</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f6f9;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-    }
-    .login-box {
-        margin-top: 100px;
-    }
-    input {
-        padding: 10px;
-        margin: 5px;
-        width: 200px;
-    }
-    button {
-        padding: 10px 20px;
-        cursor: pointer;
-    }
-    #content {
-        display: none;
-        padding: 20px;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background: #1f2a44;
+    color: white;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.menu-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 5px;
+}
+
+.menu-item:hover {
+    background: #3a4a6a;
+}
+
+.active {
+    background: #4CAF50;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #f4f6f9;
+}
+
+.header {
+    padding: 10px;
+    background: #fff;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.viewer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+iframe {
+    width: 90%;
+    height: 90%;
+    border: none;
+}
+
+/* Controls */
+.controls {
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Login */
+.login-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #f4f6f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px;
+        font-size: 12px;
     }
     iframe {
-        margin: 20px 0;
-        max-width: 100%;
+        width: 100%;
+        height: 70vh;
     }
+}
 </style>
+
 </head>
 
 <body>
 
+<!-- Login -->
 <div class="login-box" id="loginBox">
     <h2>ACLS 2026 Login</h2>
-    <input type="text" id="username" placeholder="Username"><br>
-    <input type="password" id="password" placeholder="Password"><br>
+    <input id="username" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
     <button onclick="login()">Login</button>
     <p id="error" style="color:red;"></p>
 </div>
 
-<div id="content">
-    <h1>2026 ACLS Slide Presentation</h1>
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar" style="display:none;">
+    <h2>ACLS 目錄</h2>
+</div>
 
-    <!-- Slides -->
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQuWWyuzBkmRdWFeSj7qjbmQ7W5Xeg6YZxglggwBZqlwG5MwiBuNb-tW-C7RLf13g/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
+<!-- Main -->
+<div class="main" id="main" style="display:none;">
+    <div class="header" id="title">Slide</div>
 
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRr1linZVTuPggKjazLls5wD4T-XclZTVAXa3-Jd7rymbGlM1n1OsONq3ZCX0KmMg/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
+    <div class="viewer">
+        <iframe id="frame"></iframe>
+    </div>
 
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRKxt9evd40U82CkJ2iUWR53nu5IQveHESBInVG3D6N_cM0XsIuCbk1xKuWouiQJA/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vTuUmm59xOK_mfkbDoU1mpsVnjCBJyPjnWVHSBlU_CKLExhOheBTG8x72XAkJfpaQ/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQOI1en3tYmOjKP_jb0iMi1llKXMIcxuMeDH7NZ4Y3CBZvkMoqRBnPUHLTOkgUryw/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR0FEJpSYQarMbDlnt6zR1TEMgpAeIR7vQx5x1fYSUE9L5MsOhS7tP4cZVwY8LAZw/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQV_JEuUreql5gVKFOqcN-aWJK5L58W-9HvHBUt6VYcXp2dZ8786jxGNKe1NXNOXQ/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQEE4QbeOqUYZBgTfVyIqUIVmojnaZIIqjIR0zLCAM_j6tt6H1EQaQCZym_jIobqg/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRcK8mDPbcQPG5ix2XYDDA4Qq7SSpJDMkWEipkmwXEwBbaQ9c6qvv0-8ELW5UgQaQ/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vR2kWd-NA5-yVGf7Zd8ys2tp93phT1t6N33aqk-2P_EIsYCkk1HHYd9LvtdVSqMXQ/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQ7H1PZo9Jc5GJ7pPEhRClfuQ5ME4pT7qB_7VnEqm-TJ4uZdafGRNXu2SJzjU-rgw/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
-    <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRD81nIeYv2cS3Pny0BIyEbK45Lbw_k986U8x0hcdCZfah6DQ80GwqO-OjDiBoArw/pubembed?start=true&loop=true&delayms=3000" width="1280" height="749"></iframe>
-
+    <div class="controls">
+        <button onclick="prevSlide()">⬅ 上一頁</button>
+        <button onclick="nextSlide()">下一頁 ➡</button>
+    </div>
 </div>
 
 <script>
-function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
 
-    if (user === "Bluer2026" && pass === "Bluer2026") {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("content").style.display = "block";
+const slides = [
+{title:"01. ACLS Overview", url:"https://docs.google.com/presentation/d/e/2PACX-1vQuWWyuzBkmRdWFeSj7qjbmQ7W5Xeg6YZxglggwBZqlwG5MwiBuNb-tW-C7RLf13g/pubembed?start=true&loop=true&delayms=3000"},
+{title:"02. BLS & Initial Assessment", url:"https://docs.google.com/presentation/d/e/2PACX-1vRr1linZVTuPggKjazLls5wD4T-XclZTVAXa3-Jd7rymbGlM1n1OsONq3ZCX0KmMg/pubembed?start=true&loop=true&delayms=3000"},
+{title:"03. Airway Management", url:"https://docs.google.com/presentation/d/e/2PACX-1vRKxt9evd40U82CkJ2iUWR53nu5IQveHESBInVG3D6N_cM0XsIuCbk1xKuWouiQJA/pubembed?start=true&loop=true&delayms=3000"},
+{title:"04. Rhythm Recognition", url:"https://docs.google.com/presentation/d/e/2PACX-1vTuUmm59xOK_mfkbDoU1mpsVnjCBJyPjnWVHSBlU_CKLExhOheBTG8x72XAkJfpaQ/pubembed?start=true&loop=true&delayms=3000"},
+{title:"05. Defibrillation", url:"https://docs.google.com/presentation/d/e/2PACX-1vQOI1en3tYmOjKP_jb0iMi1llKXMIcxuMeDH7NZ4Y3CBZvkMoqRBnPUHLTOkgUryw/pubembed?start=true&loop=true&delayms=3000"},
+{title:"06. ACLS Drugs", url:"https://docs.google.com/presentation/d/e/2PACX-1vR0FEJpSYQarMbDlnt6zR1TEMgpAeIR7vQx5x1fYSUE9L5MsOhS7tP4cZVwY8LAZw/pubembed?start=true&loop=true&delayms=3000"},
+{title:"07. Cardiac Arrest", url:"https://docs.google.com/presentation/d/e/2PACX-1vQV_JEuUreql5gVKFOqcN-aWJK5L58W-9HvHBUt6VYcXp2dZ8786jxGNKe1NXNOXQ/pubembed?start=true&loop=true&delayms=3000"},
+{title:"08. Post ROSC", url:"https://docs.google.com/presentation/d/e/2PACX-1vQEE4QbeOqUYZBgTfVyIqUIVmojnaZIIqjIR0zLCAM_j6tt6H1EQaQCZym_jIobqg/pubembed?start=true&loop=true&delayms=3000"},
+{title:"09. Bradycardia", url:"https://docs.google.com/presentation/d/e/2PACX-1vRcK8mDPbcQPG5ix2XYDDA4Qq7SSpJDMkWEipkmwXEwBbaQ9c6qvv0-8ELW5UgQaQ/pubembed?start=true&loop=true&delayms=3000"},
+{title:"10. Tachycardia", url:"https://docs.google.com/presentation/d/e/2PACX-1vR2kWd-NA5-yVGf7Zd8ys2tp93phT1t6N33aqk-2P_EIsYCkk1HHYd9LvtdVSqMXQ/pubembed?start=true&loop=true&delayms=3000"},
+{title:"11. Special Situations", url:"https://docs.google.com/presentation/d/e/2PACX-1vQ7H1PZo9Jc5GJ7pPEhRClfuQ5ME4pT7qB_7VnEqm-TJ4uZdafGRNXu2SJzjU-rgw/pubembed?start=true&loop=true&delayms=3000"},
+{title:"12. Mega Code", url:"https://docs.google.com/presentation/d/e/2PACX-1vRD81nIeYv2cS3Pny0BIyEbK45Lbw_k986U8x0hcdCZfah6DQ80GwqO-OjDiBoArw/pubembed?start=true&loop=true&delayms=3000"}
+];
+
+let current = 0;
+
+function loadSlide(index) {
+    current = index;
+    document.getElementById("frame").src = slides[index].url;
+    document.getElementById("title").innerText = slides[index].title;
+
+    document.querySelectorAll(".menu-item").forEach((el,i)=>{
+        el.classList.toggle("active", i===index);
+    });
+}
+
+function nextSlide() {
+    if (current < slides.length - 1) loadSlide(current + 1);
+}
+
+function prevSlide() {
+    if (current > 0) loadSlide(current - 1);
+}
+
+function buildMenu() {
+    const sidebar = document.getElementById("sidebar");
+    slides.forEach((s, i) => {
+        const div = document.createElement("div");
+        div.className = "menu-item";
+        div.innerText = s.title;
+        div.onclick = () => loadSlide(i);
+        sidebar.appendChild(div);
+    });
+}
+
+function login() {
+    if (username.value === "Bluer2026" && password.value === "Bluer2026") {
+        loginBox.style.display = "none";
+        sidebar.style.display = "block";
+        main.style.display = "flex";
+        buildMenu();
+        loadSlide(0);
     } else {
-        document.getElementById("error").innerText = "帳號或密碼錯誤";
+        error.innerText = "帳號或密碼錯誤";
     }
 }
+
 </script>
 
 </body>
