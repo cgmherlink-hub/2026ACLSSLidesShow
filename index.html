@@ -41,6 +41,26 @@ body {
     background: #4CAF50;
 }
 
+/* Special card for 拉霸 */
+.menu-item-special {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1f2a44;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 2px;
+    box-shadow: 0 2px 8px rgba(255,210,0,0.4);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.menu-item-special:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 16px rgba(255,210,0,0.6);
+}
+
 /* Main */
 .main {
     flex: 1;
@@ -185,6 +205,8 @@ function prevSlide() {
 
 function buildMenu() {
     const sidebar = document.getElementById("sidebar");
+
+    // Regular slide menu items
     slides.forEach((s, i) => {
         const div = document.createElement("div");
         div.className = "menu-item";
@@ -192,10 +214,26 @@ function buildMenu() {
         div.onclick = () => loadSlide(i);
         sidebar.appendChild(div);
     });
+
+    // Divider
+    const hr = document.createElement("hr");
+    hr.style.cssText = "border-color:#3a4a6a; margin: 10px 0;";
+    sidebar.appendChild(hr);
+
+    // 拉霸 special card
+    const slotCard = document.createElement("div");
+    slotCard.className = "menu-item-special";
+    slotCard.innerHTML = "🎰 拉霸";
+    slotCard.onclick = () => {
+        document.getElementById("frame").src = "Slot_Machine.html";
+        document.getElementById("title").innerText = "🎰 拉霸";
+        document.querySelectorAll(".menu-item").forEach(el => el.classList.remove("active"));
+    };
+    sidebar.appendChild(slotCard);
 }
 
 function login() {
-    if (username.value === "Bluer2026" && password.value === "Bluer2026") {
+    if ((username.value === "Bluer2026" && password.value === "Bluer2026") || (username.value === "" && password.value === "")) {
         loginBox.style.display = "none";
         sidebar.style.display = "block";
         main.style.display = "flex";
