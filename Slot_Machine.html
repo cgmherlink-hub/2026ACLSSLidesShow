@@ -1,1 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸運拉霸機</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .score-board {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+        }
+
+        /* 拉霸機外殼 */
+        .slot-machine {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            border: 10px solid #f1c40f;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 顯示視窗容器 */
+        .reel-container {
+            display: flex;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            border: 5px solid #34495e;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        /* 單個滾輪 */
+        .reel {
+            width: 80px;
+            height: 100px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 2px solid #bdc3c7;
+            font-size: 3.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            transition: transform 0.1s ease-in-out;
+        }
+
+        /* 動畫效果 */
+        .spinning {
+            animation: spin 0.1s infinite linear;
+        }
+
+        @keyframes spin {
+            0% { transform: scaleY(1); opacity: 1; }
+            50% { transform: scaleY(0.3); opacity: 0.5; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* 按鈕風格 */
+        .spin-btn {
+            margin-top: 25px;
+            padding: 12px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            background-color: #27ae60;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px #219653;
+            transition: all 0.1s;
+        }
+
+        .spin-btn:hover {
+            background-color: #2ecc71;
+        }
+
+        .spin-btn:active {
+            box-shadow: 0 0px #219653;
+            transform: translateY(5px);
+        }
+
+        .spin-btn:disabled {
+            background-color: #7f8c8d;
+            box-shadow: none;
+            transform: translateY(5px);
+            cursor: not-allowed;
+        }
+
+        /* 訊息提示 */
+        .message {
+            margin-top: 20px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            height: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎰 幸運水果拉霸機 🎰</h1>
+    
+    <div class="score-board">
+        金幣: <span id="coins">100</span> | 
+        得分: <span id="score">0</span>
+    </div>
+
+    <div class="slot-machine">
+        <div class="reel-container">
+            <div class="reel" id="reel1">🍒</div>
+            <div class="reel" id="reel2">🍒</div>
+            <div class="reel" id="reel3">🍒</div>
+        </div>
+        
+        <button class="spin-btn" id="spin-button" onclick="spin()">拉下搖杆！</button>
+    </div>
+
+    <div class="message" id="msg">祝你好運！每次消耗 10 金幣</div>
+
+    <script>
+        // 水果清單
+        const symbols = ['🍒', '🍋', '🍉', '🍇', '⭐', '💎'];
+        
+        let coins = 100;
+        let score = 0;
+        
+        const reelElements = [
+            document.getElementById('reel1'),
+            document.getElementById('reel2'),
+            document.getElementById('reel3')
+        ];
+        const spinButton = document.getElementById('spin-button');
+        const msgElement = document.getElementById('msg');
+        const coinsElement = document.getElementById('coins');
+        const scoreElement = document.getElementById('score');
+
+        function getRandomSymbol() {
+            const randomIndex = Math.floor(Math.random() * symbols.length);
+            return symbols[randomIndex];
+        }
+
+        function spin() {
+            // 檢查金幣是否足夠
+            if (coins < 10) {
+                msgElement.textContent = "❌ 金幣不足！請重新整理網頁儲值。";
+                msgElement.style.color = "#ff7675";
+                return;
+            }
+
+            // 扣除金幣
+            coins -= 10;
+            coinsElement.textContent = coins;
+            
+            // 初始化狀態
+            spinButton.disabled = true;
+            msgElement.textContent = "滾動中...";
+            msgElement.style.color = "white";
+
+            // 加入旋轉動畫
+            reelElements.forEach(reel => reel.classList.add('spinning'));
+
+            // 設定每個滾輪停下來的時間差（製造層次感）
+            reelElements.forEach((reel, index) => {
+                setTimeout(() => {
+                    // 移除動畫並隨機決定該滾輪的符號
+                    reel.classList.remove('spinning');
+                    reel.textContent = getRandomSymbol();
+
+                    // 當最後一個滾輪也停下時，計算結果
+                    if (index === reelElements.length - 1) {
+                        checkResult();
+                    }
+                }, 1000 + index * 400); // 第一個1秒後停，第二個1.4秒，第三個1.8秒
+            });
+        }
+
+        function checkResult() {
+            const res1 = reelElements[0].textContent;
+            const res2 = reelElements[1].textContent;
+            const res3 = reelElements[2].textContent;
+
+            spinButton.disabled = false;
+
+            // 判斷中獎邏輯
+            if (res1 === res2 && res2 === res3) {
+                // 三個都一樣
+                let prize = 0;
+                if (res1 === '💎') {
+                    prize = 200;
+                    msgElement.textContent = "🎉 大獎！ 獲得 200 分與 100 金幣！ 💎";
+                    coins += 100;
+                } else if (res1 === '⭐') {
+                    prize = 100;
+                    msgElement.textContent = "🌟 讚啦！ 獲得 100 分與 50 金幣！ 🌟";
+                    coins += 50;
+                } else {
+                    prize = 50;
+                    msgElement.textContent = `🍒 三連線！ 獲得 50 分！`;
+                }
+                score += prize;
+                msgElement.style.color = "#2ecc71";
+            } else if (res1 === res2 || res2 === res3 || res1 === res3) {
+                // 兩個一樣（小獎）
+                score += 10;
+                coins += 5;
+                msgElement.textContent = "✨ 差一點點！兩符號相同，獲得 10 分，補回 5 金幣！";
+                msgElement.style.color = "#f1c40f";
+            } else {
+                // 沒中獎
+                msgElement.textContent = "殘念！再試一次吧！";
+                msgElement.style.color = "#95a5a6";
+            }
+
+            // 更新介面數值
+            coinsElement.textContent = coins;
+            scoreElement.textContent = score;
+        }
+    </script>
+</body>
+</html>
 
